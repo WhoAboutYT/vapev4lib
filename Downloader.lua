@@ -45,12 +45,13 @@ TasksMT.__newindex = newcclosure(function(self, guid, valueTbl)
 			Url = valueTbl.url,
 			Method = "GET",
 		})
+
 		local Body = Req.Body
 
 		pcall(writefile, valueTbl.path, Body)
 
 		Log("Downloaded & Saved ", valueTbl.url, "to ", valueTbl.path)
-		_tasks[guid] = nil
+		rawset(_tasks, guid, nil) -- Yea Here too with the Stack overflow (This can sometimes Not let the gui end cause of the Coroutine. :sadge:)
 	end)
 end)
 
@@ -112,5 +113,3 @@ task.spawn(function()
 		end
 	end
 end)
-
-return Downloader
